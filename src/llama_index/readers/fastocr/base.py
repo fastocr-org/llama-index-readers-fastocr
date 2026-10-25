@@ -29,7 +29,7 @@ class FastOCRReader(BaseReader):
         timeout: Seconds to wait for each document to finish.
 
     Each document's metadata has source, file_name, fastocr_document_id, pages_billed and
-    status. A "partial" status means the account ran out of API pages partway: the text
+    status. A "partial" status means the account ran out of pages partway: the text
     covers only the processed pages and a warning is logged. A failed document raises the
     SDK's DocumentFailedError. The FastOCR bookkeeping keys are left out of the text that
     embedding models and LLMs see.
@@ -75,7 +75,7 @@ class FastOCRReader(BaseReader):
         job = client.documents.process(path, timeout=self.timeout)
         if job.is_partial:
             logger.warning(
-                "%s: only %s of %s pages were processed because the account ran out of API pages",
+                "%s: only %s of %s pages were processed because the account ran out of pages",
                 path.name,
                 job.pages_billed,
                 job.pages_total,

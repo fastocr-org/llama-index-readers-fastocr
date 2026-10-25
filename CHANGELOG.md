@@ -4,6 +4,12 @@ All notable changes to this package are listed here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions follow
 [semantic versioning](https://semver.org).
 
+## [0.1.1] - 2026-10-25
+
+- Documentation only: the README describes the new pricing (50 free pages a month shared
+  with the website, Page Packs bought on the pricing page). The SDK dependency now allows
+  `fastocr-sdk` 0.3.x.
+
 ## [0.1.0] - 2026-10-24
 
 First release. `FastOCRReader`, a LlamaIndex reader for scanned PDFs and images

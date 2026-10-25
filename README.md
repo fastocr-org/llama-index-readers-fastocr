@@ -57,7 +57,7 @@ Python 3.10 or newer. The distribution is `llama-index-readers-fastocr` and the 
 
 The FastOCR keys (`fastocr_document_id`, `pages_billed`, `status`, `searchable_pdf_path`) are left out of the text that embedding models and LLMs see. Pass `extra_info={...}` to `load_data` to add your own metadata.
 
-If the account runs out of API pages partway through a file, you still get the text of the pages that were processed, with `status` set to `partial` and a warning in the log. A document that fails raises the error from [`fastocr-sdk`](https://pypi.org/project/fastocr-sdk/) with its message and code.
+If the account runs out of pages partway through a file, you still get the text of the pages that were processed, with `status` set to `partial` and a warning in the log. A document that fails raises the error from [`fastocr-sdk`](https://pypi.org/project/fastocr-sdk/) with its message and code.
 
 ## Languages and files
 
@@ -70,9 +70,9 @@ Any signed-in FastOCR account can create an API key and start right away.
 
 1. Sign in and create an API key in the [developer console](https://fastocr.org/developers/keys). You accept the [API terms](https://fastocr.org/api-terms) with your first key.
 2. Set the key as `FASTOCR_API_KEY`, or pass `api_key=` to the reader.
-3. When you need more than the free pages, buy a prepaid API page pack by card in the [developer console](https://fastocr.org/developers/keys#buy-api-pages).
+3. When you need more than the free pages, buy a Page Pack on the [pricing page](https://fastocr.org/pricing?from=api#packs). Packs work on the website and in the API.
 
-Each account gets 50 free document pages per month.
+Every account gets 50 free pages a month, shared with PDFs on the website. An image sent to the API is one page.
 
 ## Examples
 
