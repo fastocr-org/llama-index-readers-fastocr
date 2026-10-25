@@ -4,7 +4,7 @@ All notable changes to this package are listed here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions follow
 [semantic versioning](https://semver.org).
 
-## [0.1.0] - Unreleased
+## [0.1.0] - 2026-10-24
 
 First release. `FastOCRReader`, a LlamaIndex reader for scanned PDFs and images
 (PDF, PNG, JPG, JPEG, GIF, WebP, BMP). One document per file, with `source`, `file_name`,
