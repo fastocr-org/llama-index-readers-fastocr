@@ -1,0 +1,84 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "llama-index-readers-fastocr"
+dynamic = ["version"]
+description = "LlamaIndex reader for the FastOCR Document OCR API: load scanned PDFs and images as text, in 100+ languages."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+license-files = ["LICENSE"]
+keywords = ["llama-index", "llamahub", "reader", "ocr", "pdf", "scanned-pdf", "rag", "fastocr"]
+authors = [
+    { name = "FastOCR", email = "support@fastocr.org" }
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Scientific/Engineering :: Image Recognition",
+    "Typing :: Typed",
+]
+dependencies = [
+    "fastocr-sdk>=0.2.0,<0.3",
+    "llama-index-core>=0.12.0,<0.15",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "respx>=0.21.0",
+    "ruff>=0.6",
+    "mypy>=1.10",
+]
+
+[project.urls]
+Homepage = "https://fastocr.org"
+Documentation = "https://fastocr.org/docs"
+Repository = "https://github.com/fastocr-org/llama-index-readers-fastocr"
+Changelog = "https://github.com/fastocr-org/llama-index-readers-fastocr/blob/main/CHANGELOG.md"
+Issues = "https://github.com/fastocr-org/llama-index-readers-fastocr/issues"
+
+[tool.hatch.version]
+path = "src/llama_index/readers/fastocr/_version.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/llama_index"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src", "tests", "docs", "README.md", "LICENSE", "CHANGELOG.md"]
+
+[tool.llamahub]
+contains_example = false
+import_path = "llama_index.readers.fastocr"
+
+[tool.llamahub.class_authors]
+FastOCRReader = "fastocr-org"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+files = ["src"]
+mypy_path = "src"
+namespace_packages = true
+explicit_package_bases = true
