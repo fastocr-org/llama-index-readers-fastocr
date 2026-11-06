@@ -44,7 +44,7 @@ Python 3.10 or newer. The distribution is `llama-index-readers-fastocr` and the 
 
 ## What you get back
 
-`FastOCRReader.load_data` returns one `Document` per file.
+`FastOCRReader.load_data` returns one `Document` per file. For bank statements, see the next section.
 
 | You get | Where |
 |---|---|
@@ -59,6 +59,29 @@ The FastOCR keys (`fastocr_document_id`, `pages_billed`, `status`, `searchable_p
 
 If the account runs out of pages partway through a file, you still get the text of the pages that were processed, with `status` set to `partial` and a warning in the log. A document that fails raises the error from [`fastocr-sdk`](https://pypi.org/project/fastocr-sdk/) with its message and code.
 
+## Bank statements (beta)
+
+`FastOCRBankStatementReader` reads bank statements (PDF, PNG, JPG, JPEG or WebP) and returns one `Document` per transaction. A transaction is what people ask about ("what did I pay this shop?"), so each one is its own node to embed and retrieve; the statement-level facts sit in every document's metadata.
+
+```python
+from llama_index.readers.fastocr import FastOCRBankStatementReader
+
+documents = FastOCRBankStatementReader().load_data("october-statement.pdf")
+print(documents[0].text)  # 2026-10-02 | Coffee | out 5.00 USD | balance 95.00
+```
+
+| You get | Where |
+|---|---|
+| Date, description, signed amount and balance of one transaction | `text` |
+| Bank, account number, currency | `metadata["bank"]`, `metadata["account_number"]`, `metadata["currency"]` |
+| Which account of the statement (1 is the first) | `metadata["account"]` |
+| Date, amount, `in` or `out`, balance, page | `metadata["date"]`, `["amount"]`, `["direction"]`, `["balance"]`, `["page"]` |
+| `verified`, `check` or `unchecked` | `metadata["status"]` |
+| True when a person should check the statement | `metadata["needs_review"]` |
+| The statement id | `metadata["fastocr_statement_id"]` |
+
+The statement id, account, account number, page, status and `needs_review` are left out of the text that embedding models and LLMs see; the bank, currency, date, amount, direction and balance stay in it. Pass `extra_info={...}` to `load_data` to add your own metadata. Bank statement pages are a separate balance, shared with the website's bank statement converter. A statement with no transactions gives no documents and a warning in the log; a failed one raises the SDK's `StatementFailedError`. Options: `api_key`, `base_url` and `timeout` (600 seconds by default).
+
 ## Languages and files
 
 - 100+ languages, detected automatically. No language setting is needed.
@@ -72,7 +95,7 @@ Any signed-in FastOCR account can create an API key and start right away.
 2. Set the key as `FASTOCR_API_KEY`, or pass `api_key=` to the reader.
 3. When you need more than the free pages, buy a Page Pack on the [pricing page](https://fastocr.org/pricing?from=api#packs). Packs work on the website and in the API.
 
-Every account gets 50 free pages a month, shared with PDFs on the website. An image sent to the API is one page.
+Every account gets 20 free pages a month, shared with PDFs on the website. An image sent to the API is one page.
 
 ## Examples
 

@@ -4,6 +4,13 @@ All notable changes to this package are listed here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions follow
 [semantic versioning](https://semver.org).
 
+## [0.2.0] - 2026-11-05
+
+- New `FastOCRBankStatementReader` (beta): reads bank statements (PDF, PNG, JPG, JPEG or
+  WebP) and returns one document per transaction, with the bank, account, currency, date,
+  amount, direction, balance, row status and `needs_review` in the metadata. Needs
+  `fastocr-sdk` 0.4.0 or later.
+
 ## [0.1.1] - 2026-10-25
 
 - Documentation only: the README describes the new pricing (50 free pages a month shared
